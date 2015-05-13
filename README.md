@@ -27,7 +27,7 @@ Each feature contains a demo that showcases the feature. If you don't want to me
 tarballs, but are interested in knowing more about the features, you can look at [Travis' output],
 and read the [source code][/unsized_structs/demo.rs] of each demo.
 
-[Travis' output]:
+[Travis' output]: https://travis-ci.org/japaric/rusty-edge
 
 ## License
 
