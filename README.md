@@ -1,3 +1,7 @@
+[![Build Status][status]](https://travis-ci.org/japaric/rusty-edge)
+
+[status]: https://travis-ci.org/japaric/rusty-edge.svg?branch=master
+
 # `rusty-edge`
 
 Rust nightly channel + bleeding edge features
