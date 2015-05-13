@@ -27,20 +27,27 @@ fn main() {
     println!("// `m: &'array Mat<i32>`");
     show!(m = Mat::reshape(&array, (3, 5)));
 
+    println!("// 3-by-5 matrix (3 rows, 5 columns)");
     show!(m);
 
+    println!("// Element at the intersection of the second row and the third column");
     show!(m[(1, 2)]);
 
+    println!("// Second row");
     println!("// `&m[(1, ..)]: &'array Row<i32>`");
     show!(&m[(1, ..)]);
 
+    println!("// Third column");
     println!("// `&m[(.., 2)]: &'array Col<i32>`");
     show!(&m[(.., 2)]);
 
+    println!("// First row (alternative syntax)");
     show!(&m[0]);
 
+    println!("// Third element of the first row");
     show!(m[0][2]);
 
+    println!("// Submatrix from 2nd to 3rd row and from 2nd to 4th column");
     show!(&m[(1..3, 1..4)]);
 }
 
