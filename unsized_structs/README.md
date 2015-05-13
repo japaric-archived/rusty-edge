@@ -1,16 +1,14 @@
 # `unsized_structs`
 
 I added an `unsized struct` feature to ([my fork] of) `rustc` that lets users create their own
-unsized types (from scratch, not just newtypes over `[T]` or `str`), and then used that feature
-and the `Index` trait to add Python-like slicing syntax to a matrix data structure:
+unsized types (from "scratch", not just newtypes over `[T]` or `str`), and then used that feature
+and the (unmodified) `Index` trait to add Python-like slicing syntax to a matrix data structure:
 
 [my fork]: https://github.com/japaric/rust/commits/unsized
 
 [Source code](/unsized_structs/demo.rs).
 
-[Travis output](https://travis-ci.org/japaric/rusty-edge)
-
-(The output looks like a REPL, but it's just a normal Rust program)
+(For convenience the output looks like a REPL, but it's just a normal Rust program)
 
 ``` rust
 // `array: [i32; 15]`
@@ -55,7 +53,9 @@ Row([0, 1, 2, 3, 4])
 [7, 8, 9]
 ```
 
-This is how the same thing looks like in Python:
+[Same output in Travis](https://travis-ci.org/japaric/rusty-edge)
+
+And this is how the same operations looks like in Python:
 
 ``` python
 >>> import numpy
