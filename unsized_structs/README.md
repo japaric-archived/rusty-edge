@@ -7,6 +7,7 @@ and the `Index` trait to add Python-like slicing syntax to a matrix data structu
 [my fork]: https://github.com/japaric/rust/commits/unsized
 
 [Source code](/unsized_structs/demo.rs).
+
 [Travis output](https://travis-ci.org/japaric/rusty-edge)
 
 (The output looks like a REPL, but it's just a normal Rust program)
@@ -101,5 +102,5 @@ If you want to try out the feature, you can use one of my unstested (as in not `
 stage1 tarballs (Linux x86_64 only, see [top README]), otherwise you'll have to compile
 [this branch] by yourself.
 
-[top README](/README.md)
+[top README]: /README.md
 [this branch]: https://github.com/japaric/rust/commits/unsized
