@@ -3,13 +3,11 @@
 set -e
 set -x
 
-for example in */; do
-    if [ "$example" == "scripts/"  ]; then
-        continue
-    fi
-
+for example in unsized_types/*/; do
     pushd $example
-    rustc demo.rs
-    ./demo
+    cargo build
+    valgrind target/debug/$(basename $example)
+    cargo build --release
+    valgrind target/release/$(basename $example)
     popd
 done

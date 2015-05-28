@@ -8,9 +8,9 @@ Rust nightly channel + bleeding edge features
 
 ## Features
 
-- [`unsized_structs`](/unsized_structs): Define your own unsized structs (like `[T]`, `str`).
-  Increases the usability of the `Index`/`Deref` traits, and lets you harness the power of
-  re-borrow semantics.
+- ~~[`unsized_structs`](/unsized_structs)~~ Superseded by [`unsized_types`](/unsized_types): Define
+  your own unsized types (like `[T]`, `str`). Increases the usability of the `Index`/`Deref`
+  traits, and lets you harness the power of re-borrow semantics.
 
 [Other planned features](https://github.com/japaric/linalg.rs#improving-operator-sugar)
 
