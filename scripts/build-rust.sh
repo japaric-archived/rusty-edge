@@ -13,7 +13,7 @@ set -e
 
 # Update source to upstream
 cd $SRC_DIR
-git checkout unsized
+git checkout unsized2
 git pull
 git submodule update
 
