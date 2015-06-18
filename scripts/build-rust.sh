@@ -33,6 +33,7 @@ make clean
 make -j$(nproc)
 
 # package
+rm -rf $DIST_DIR/*
 DESTDIR=$DIST_DIR make install -j$(nproc)
 cd $DIST_DIR
 tar czf ~/$TARBALL bin lib
@@ -44,6 +45,3 @@ TARBALL=$TARBALL-$TARBALL_HASH.tar.gz
 # ship it
 $DROPBOX -p upload $TARBALL .
 rm $TARBALL
-
-# clean up
-rm -rf $DIST_DIR/*
