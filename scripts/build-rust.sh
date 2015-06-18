@@ -45,3 +45,6 @@ TARBALL=$TARBALL-$TARBALL_HASH.tar.gz
 # ship it
 $DROPBOX -p upload $TARBALL .
 rm $TARBALL
+
+# clean up
+rm -rf $DIST_DIR/*
