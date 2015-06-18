@@ -10,29 +10,31 @@ set -e
 : ${DROPBOX:=dropbox_uploader.sh}
 : ${HOST:=x86_64-unknown-linux-gnu}
 : ${SRC_DIR:=~/src}
+: ${DIST_DIR:=~/dist}
 
 # Update source to upstream
 cd $SRC_DIR
-git checkout unsized2
-git pull
+git reset --hard HEAD
+git fetch
+git checkout origin/edge
 git submodule update
 
 # Get information about HEAD
 HEAD_HASH=$(git rev-parse --short HEAD)
-HEAD_DATE=$(TZ=UTC date -d @$(git show -s --format=%ct HEAD) +'%Y-%m-%d')
+HEAD_DATE=$(TZ=UTC date +'%Y-%m-%d')
 TARBALL=rust-$HEAD_DATE-$HEAD_HASH-$HOST
 
 # build it
 cd build
 ../configure \
-  --enable-debug \
-  --enable-optimize \
-  --enable-ccache
+  --enable-ccache \
+  --prefix=/
 make clean
-make rustc-stage1 -j$(nproc)
+make -j$(nproc)
 
-# packgae
-cd $HOST/stage1
+# package
+DESTDIR=$DIST_DIR make install -j$(nproc)
+cd $DIST_DIR
 tar czf ~/$TARBALL bin lib
 cd ~
 TARBALL_HASH=$(sha1sum $TARBALL | tr -s ' ' | cut -d ' ' -f 1)
@@ -42,3 +44,6 @@ TARBALL=$TARBALL-$TARBALL_HASH.tar.gz
 # ship it
 $DROPBOX -p upload $TARBALL .
 rm $TARBALL
+
+# clean up
+rm -rf $DIST_DIR/*
