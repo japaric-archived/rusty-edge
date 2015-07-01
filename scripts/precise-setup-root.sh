@@ -15,11 +15,12 @@ set -x
 
 ## install g++
 apt-get update -qq
-apt-get install -qq build-essential
-apt-get install -qq python-software-properties
+apt-get install -qq --force-yes build-essential
+apt-get install -qq --force-yes python-software-properties
 add-apt-repository -y ppa:ubuntu-toolchain-r/test
 apt-get update -qq
-apt-get install -qq gcc-4.7 g++-4.7
+apt-get install -qq --force-yes gcc-4.8 g++-4.8
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
 
 ## install dropbox_uploader.sh
 apt-get install -qq curl git
