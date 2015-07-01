@@ -8,9 +8,9 @@ Rust nightly channel + **backward compatible** bleeding edge features
 
 ## Features
 
-- ~~[`unsized_structs`](/unsized_structs)~~ Superseded by [`unsized_types`](/unsized_types): Define
-  your own unsized types (like `[T]`, `str`). Increases the usability of the `Index`/`Deref`
-  traits, and lets you harness the power of re-borrow semantics. (RFC pending)
+- [`unsized_types`](/unsized_types): Define your own unsized types (like `[T]`, `str`). Increases
+  the usability of the `Index`/`Deref` traits, and lets you harness the power of re-borrow
+  semantics. (RFC pending)
 
 - Multi argument indexing: `A[i, j]` works and it's just sugar over `A[(i, j)]` (RFC pending)
 
