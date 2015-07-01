@@ -16,7 +16,7 @@ Here's the output of `cargo run` under valgrind
 
 // Equivalent to `let slice: &[i32] = &array`
 // `slice: &'array Slice<i32>`
-> slice = (&array).coerce_ref()
+> slice = coerce_ref(&array)
 ()
 
 > slice
@@ -27,9 +27,9 @@ Here's the output of `cargo run` under valgrind
 16
 
 // In-memory representation of `slice`
-// `slice.repr(): raw::Slice<i32>`
+// `slice.repr(): FatPtr<i32, usize>`
 > slice.repr()
-Slice { data: 0xfff000428, len: 4 }
+FatPtr { data: 0xfff000208, info: 4 }
 
 // Element indexing
 > slice[3]
@@ -39,19 +39,18 @@ Slice { data: 0xfff000428, len: 4 }
 > &slice[1..3]
 [1, 2]
 
-// Equivalent to `let boxed: Box<[i32]> = Box::new([4, 5, 6, 7])`
-// `boxed: `Box<Slice<i32>>
-> boxed = Box::new([4, 5, 6, 7]).coerce_box()
+// Equivalent to `let boxed: Box<[i32]> = Box::new([..])`
+// `boxed: `Box<Slice<Box<i32>>>
+> boxed =
+    coerce_box(Box::new([Box::new(4), Box::new(5), Box::new(6), Box::new(7)]))
 ()
 
 > drop(boxed)
-deallocating 16 bytes starting at 0x682b000
+dropping contents of `Slice`
 ()
 
-==27071==
-==27071== HEAP SUMMARY:
-==27071==     in use at exit: 0 bytes in 0 blocks
-==27071==   total heap usage: 25 allocs, 25 frees, 2,728 bytes allocated
-==27071==
-==27071== All heap blocks were freed -- no leaks are possible
+==25013==
+==25013== HEAP SUMMARY:
+==25013==     in use at exit: 0 bytes in 0 blocks
+==25013==   total heap usage: 29 allocs, 29 frees, 2,776 bytes allocated
 ```

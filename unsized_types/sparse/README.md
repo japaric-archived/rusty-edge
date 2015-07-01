@@ -31,18 +31,19 @@ Here's the output of `cargo run` under valgrind
 
 // 4-by-6 matrix
 > m
-[1, 2, 0, 0, 0, 0]
-[0, 3, 0, 4, 0, 0]
-[0, 0, 5, 6, 7, 0]
-[0, 0, 0, 0, 0, 8]
+[1, 2, _, _, _, _]
+[_, 3, _, 4, _, _]
+[_, _, 5, 6, 7, _]
+[_, _, _, _, _, 8]
 
 // `Box<Mat<i32>>` is a fat pointer
 > mem::size_of_val(&m)
-40
+48
 
 // In-memory representation of `Box<Mat<i32>>`
+// `m.repr(): FatPtr<i32, mat::Info>`
 > m.repr()
-Mat { data: 0x6826020, col_ind: 0x6820080, row_ptr: 0x681d060, ncols: 6, nrows: 4 }
+FatPtr { data: 0x6826020, info: Info { col_ind: 0x6820080, ncols: 6, nnz: 8, nrows: 4, row_ptr: 0x681d060 } }
 
 // Element at the intersection of the second row and the fourth column
 > m[(1, 3)]
@@ -51,7 +52,7 @@ Mat { data: 0x6826020, col_ind: 0x6820080, row_ptr: 0x681d060, ncols: 6, nrows: 
 // Third row
 // `&m[2]: &'m Row<i32>`
 > &m[2]
-Row([0, 0, 5, 6, 7, 0])
+Row([_, _, 5, 6, 7, _])
 
 // Second element of the first row
 > m[0][1]
@@ -60,19 +61,17 @@ Row([0, 0, 5, 6, 7, 0])
 // Submatrix from 2nd row to 3rd row (row slicing)
 // `&m[1..3]: &'m Mat<i32>`
 > &m[1..3]
-[0, 3, 0, 4, 0, 0]
-[0, 0, 5, 6, 7, 0]
+[_, 3, _, 4, _, _]
+[_, _, 5, 6, 7, _]
 
-> drop(m)
-freeing `data`
-freeing `col_ind`
-freeing `row_ptr`
+> mem::drop(m)
+dropping contents of the `data` pointer
+dropping `col_ind`
+dropping `row_ptr`
 ()
 
-==13590==
-==13590== HEAP SUMMARY:
-==13590==     in use at exit: 0 bytes in 0 blocks
-==13590==   total heap usage: 27 allocs, 27 frees, 2,856 bytes allocated
-==13590==
-==13590== All heap blocks were freed -- no leaks are possible
+==24207==
+==24207== HEAP SUMMARY:
+==24207==     in use at exit: 0 bytes in 0 blocks
+==24207==   total heap usage: 27 allocs, 27 frees, 2,856 bytes allocated
 ```

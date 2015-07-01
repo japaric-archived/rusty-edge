@@ -31,9 +31,9 @@ Here's the output of `cargo run`
 24
 
 // In memory-representation of `m`
-// `m.repr(): raw::Mat<i32>`
+// `m.repr(): FatPtr<T, mat::Info>`
 > m.repr()
-Mat { data: 0x7ffdcdac97dc, ncols: 5, nrows: 3 }
+FatPtr { data: 0xfff0001fc, info: Info { ncols: 5, nrows: 3 } }
 
 // Element at the intersection of the second row and the third column
 > m[(1, 2)]
@@ -49,7 +49,7 @@ Row([0, 1, 2, 3, 4])
 3
 
 // Third column
-// `&m[(.., 2)]: &'array Col<i32>`
+// `&m[(.., 2)]: &'array strided::Col<i32>`
 > &m[(.., 2)]
 Col([2, 7, 6])
 
@@ -67,9 +67,9 @@ Col([2, 7, 6])
 32
 
 // In memory-representation of `sm`
-// `sm.repr(): strided::raw::Mat<i32>`
+// `sm.repr(): FatPtr<T, strided::mat::Info>`
 > sm.repr()
-Mat { data: 0x7ffdcdac97f4, ncols: 3, nrows: 2, stride: 5 }
+FatPtr { data: 0xfff000214, info: Info { nrows: 2, ncols: 3, stride: 5 } }
 ```
 
 This is how the same operations look like in Python/NumPy for comparison:
