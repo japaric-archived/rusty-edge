@@ -83,19 +83,17 @@ impl<T> Drop for ::Mat<T> {
     fn drop(&mut self) {
         let FatPtr { data, info } = self.repr();
 
-        if !data.is_null() && data as usize != mem::POST_DROP_USIZE {
-            unsafe {
-                println!("dropping contents of the `data` pointer");
-                for x in slice::from_raw_parts(data, info.nnz) {
-                    ptr::read(x);
-                }
-
-                println!("dropping `col_ind`");
-                mem::drop(Box::from_raw(slice::from_raw_parts_mut(info.col_ind as *mut usize, info.nnz)));
-
-                println!("dropping `row_ptr`");
-                mem::drop(Box::from_raw(slice::from_raw_parts_mut(info.row_ptr as *mut usize, info.nrows + 1)));
+        unsafe {
+            println!("dropping contents of the `data` pointer");
+            for x in slice::from_raw_parts(data, info.nnz) {
+                ptr::read(x);
             }
+
+            println!("dropping `col_ind`");
+            mem::drop(Box::from_raw(slice::from_raw_parts_mut(info.col_ind as *mut usize, info.nnz)));
+
+            println!("dropping `row_ptr`");
+            mem::drop(Box::from_raw(slice::from_raw_parts_mut(info.row_ptr as *mut usize, info.nrows + 1)));
         }
     }
 }

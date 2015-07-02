@@ -1,8 +1,5 @@
-#![allow(warnings)]
-
 #![feature(box_raw)]
 #![feature(core)]
-#![feature(filling_drop)]
 #![feature(raw)]
 #![feature(unsized_types)]
 

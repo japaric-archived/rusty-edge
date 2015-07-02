@@ -3,6 +3,7 @@ use std::ops::Index;
 use std::raw::FatPtr;
 use std::{fat_ptr, fmt, mem, slice};
 
+#[allow(raw_pointer_derive)]
 #[derive(Clone, Copy)]
 pub struct Info {
     /// The indices of the non-zero elements

@@ -1,6 +1,5 @@
 #![feature(box_raw)]
 #![feature(core)]
-#![feature(filling_drop)]
 #![feature(raw)]
 #![feature(unsized_types)]
 
@@ -77,15 +76,12 @@ impl<T> fmt::Debug for Slice<T> where T: fmt::Debug {
 
 impl<T> Drop for Slice<T> {
     fn drop(&mut self) {
-        let FatPtr { data, info: len } = self.repr();
+        unsafe {
+            let FatPtr { data, info: len } = self.repr();
 
-        if !data.is_null() && data as usize != mem::POST_DROP_USIZE {
             println!("dropping contents of `Slice`");
-
-            unsafe {
-                for x in slice::from_raw_parts(data, len) {
-                        ptr::read(x);
-                }
+            for x in slice::from_raw_parts(data, len) {
+                ptr::read(x);
             }
         }
     }
